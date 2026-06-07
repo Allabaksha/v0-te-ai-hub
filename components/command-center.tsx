@@ -1,5 +1,5 @@
 "use client"
-
+ 
 import Link from "next/link"
 import { NetworkCanvas } from "@/components/network-canvas"
 import { AnimatedCounter } from "@/components/animated-counter"
@@ -12,14 +12,13 @@ import {
   Heart, TrendingUp, Banknote, Boxes, Flag,
   Brain, Workflow, BarChart3, Rocket,
 } from "lucide-react"
-
+ 
 const KPIS = [
   { label: "Active Projects", value: PORTFOLIO.activeProjects, icon: Activity, prefix: "", suffix: "" },
   { label: "Weekly Hours Saved", value: PORTFOLIO.weeklyHoursSaved, icon: Clock, prefix: "", suffix: "" },
-  { label: "FTE Savings", value: PORTFOLIO.fteSavings, icon: Users, prefix: "", suffix: "" },
   { label: "Estimated Value", value: 2.35, icon: DollarSign, prefix: "$", suffix: "M", decimals: 2 },
 ]
-
+ 
 const PULSE = [
   { label: "Portfolio Health", value: PORTFOLIO.health, suffix: "", icon: Heart, accent: "text-emerald-600" },
   { label: "Portfolio Growth", value: PORTFOLIO.growth, prefix: "+", suffix: "%", icon: TrendingUp, accent: "text-primary" },
@@ -27,15 +26,15 @@ const PULSE = [
   { label: "Active Programs", value: PORTFOLIO.activePrograms, icon: Boxes, accent: "text-blue-600" },
   { label: "Upcoming Milestones", value: PORTFOLIO.upcomingMilestones, icon: Flag, accent: "text-amber-600" },
 ]
-
+ 
 const CAT_ICONS: Record<string, any> = {
   AI: Brain, Automation: Workflow, Analytics: BarChart3, "Digital Transformation": Rocket,
 }
-
+ 
 const REGION_IMPACT: Record<string, string> = {
   EMIA: "High", AMER: "Very High", GLOBAL: "Strategic",
 }
-
+ 
 export function CommandCenter() {
   return (
     <div className="space-y-8">
@@ -51,14 +50,14 @@ export function CommandCenter() {
             </span>
             LIVE • FY26 PORTFOLIO • EXECUTIVE VIEW
           </span>
-
+ 
           <h1 className="mt-5 max-w-2xl text-balance text-3xl font-semibold leading-tight tracking-tight lg:text-5xl">
             Orchestrating the <span className="text-gradient-orange">AI Transformation</span> of the global enterprise
           </h1>
           <p className="mt-4 max-w-xl text-pretty text-sm leading-relaxed text-white/70 lg:text-base">
             A unified command center for the FY26 transformation portfolio — every initiative, milestone and dollar of value, governed in one boardroom-grade view.
           </p>
-
+ 
           <div className="mt-7 flex flex-wrap gap-3">
             <Link href="/projects" className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/30 transition hover:bg-primary/90">
               Explore Portfolio <ArrowRight className="h-4 w-4" />
@@ -67,26 +66,47 @@ export function CommandCenter() {
               <Sparkles className="h-4 w-4" /> Open Transformation Galaxy
             </Link>
           </div>
-
+ 
           {/* KPI cards */}
-          <div className="mt-10 grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
-            {KPIS.map((k) => (
-              <div key={k.label} className="glass rounded-2xl border border-white/10 p-4 lg:p-5">
-                <div className="flex items-center justify-between">
-                  <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/20 text-primary">
-                    <k.icon className="h-[18px] w-[18px]" />
-                  </span>
+          <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
+            {KPIS.map((k) => {
+              const cardStyle =
+                k.label === "Active Projects"
+                  ? "from-orange-500 to-orange-700"
+                  : k.label === "Weekly Hours Saved"
+                  ? "from-blue-500 to-blue-700"
+                  : "from-emerald-500 to-emerald-700"
+ 
+              return (
+                <div
+                  key={k.label}
+                  className={`rounded-3xl bg-gradient-to-br ${cardStyle} p-8 shadow-2xl transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02]`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/20 text-white">
+                      <k.icon className="h-6 w-6" />
+                    </span>
+                  </div>
+ 
+                  <div className="mt-6 text-4xl font-bold text-white">
+                    <AnimatedCounter
+                      value={k.value}
+                      prefix={k.prefix}
+                      suffix={k.suffix}
+                      decimals={(k as any).decimals ?? 0}
+                    />
+                  </div>
+ 
+                  <div className="mt-2 text-sm font-medium text-white/80">
+                    {k.label}
+                  </div>
                 </div>
-                <div className="mt-4 text-2xl font-semibold text-white lg:text-3xl">
-                  <AnimatedCounter value={k.value} prefix={k.prefix} suffix={k.suffix} decimals={(k as any).decimals ?? 0} />
-                </div>
-                <div className="mt-1 text-xs font-medium text-white/60">{k.label}</div>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </div>
       </section>
-
+ 
       {/* Executive Pulse */}
       <section>
         <div className="mb-4 flex items-center justify-between">
@@ -102,14 +122,19 @@ export function CommandCenter() {
                 <p.icon className="h-[18px] w-[18px]" />
               </span>
               <div className="mt-4 text-2xl font-semibold text-foreground">
-                <AnimatedCounter value={p.value} prefix={(p as any).prefix ?? ""} suffix={(p as any).suffix ?? ""} decimals={(p as any).decimals ?? 0} />
+                <AnimatedCounter
+                  value={p.value}
+                  prefix={(p as any).prefix ?? ""}
+                  suffix={(p as any).suffix ?? ""}
+                  decimals={(p as any).decimals ?? 0}
+                />
               </div>
               <div className="mt-1 text-xs font-medium text-muted-foreground">{p.label}</div>
             </div>
           ))}
         </div>
       </section>
-
+ 
       {/* Global Coverage */}
       <section className="rounded-3xl border border-border bg-card p-6 shadow-premium lg:p-8">
         <div className="mb-6">
@@ -123,7 +148,7 @@ export function CommandCenter() {
           })}
         />
       </section>
-
+ 
       {/* Transformation Categories */}
       <section>
         <div className="mb-4">
@@ -156,7 +181,10 @@ export function CommandCenter() {
                   </div>
                 </div>
                 <div className="relative mt-4 h-1.5 overflow-hidden rounded-full bg-secondary">
-                  <div className="h-full rounded-full bg-gradient-to-r from-primary to-orange-500" style={{ width: `${Math.min(100, s.growth * 3)}%` }} />
+                  <div
+                    className="h-full rounded-full bg-gradient-to-r from-primary to-orange-500"
+                    style={{ width: `${Math.min(100, s.growth * 3)}%` }}
+                  />
                 </div>
               </div>
             )

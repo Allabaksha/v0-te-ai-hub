@@ -1,14 +1,7 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
 import { AppShell } from '@/components/app-shell'
 import './globals.css'
-
-const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] })
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-})
 
 export const metadata: Metadata = {
   title: 'TE AI Hub — Transformation OS',
@@ -40,8 +33,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} bg-background`}>
-      <body className="font-sans antialiased">
+    <html lang="en" className="bg-background">
+      <body className="antialiased">
         <AppShell>{children}</AppShell>
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>

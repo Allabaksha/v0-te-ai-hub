@@ -1,4 +1,4 @@
-export type Region = "EMIA" | "AMER" | "GLOBAL"
+export type Region = "EMIA" | "AMER" | "GLOBAL" | "APAC"
 export type Category = "AI" | "Automation" | "Analytics" | "Digital Transformation"
 export type Status = "Live" | "In Progress" | "Discovery" | "Planned"
 export type Priority = "Critical" | "High" | "Medium" | "Low"
@@ -42,6 +42,13 @@ export const PRIORITY_META: Record<Priority, string> = {
   Low: "text-slate-600 bg-slate-100 border-slate-200",
 }
 
+export const REGION_META: Record<Region, { label: string; impact: string; color: string }> = {
+  EMIA: { label: "EMIA", impact: "Operational Scale", color: "#FF7A1A" },
+  AMER: { label: "AMER", impact: "Revenue Growth", color: "#FF7A1A" },
+  GLOBAL: { label: "GLOBAL", impact: "Enterprise-wide", color: "#FF7A1A" },
+  APAC: { label: "APAC", impact: "High Growth", color: "#FF7A1A" },
+}
+
 const OWNERS = [
   "Elena Rossi", "Marcus Chen", "Priya Nair", "James Okafor", "Sofia Almeida",
   "David Kim", "Amara Singh", "Lukas Müller", "Chen Wei", "Olivia Brooks",
@@ -63,6 +70,17 @@ const NAMED: Partial<Project>[] = [
   { id: "TE-004", name: "Order Entry Manual", category: "Automation", region: "AMER", status: "Discovery", priority: "Medium", owner: "Olivia Brooks" },
   { id: "TE-005", name: "Critical File", category: "Digital Transformation", region: "GLOBAL", status: "Live", priority: "High", owner: "Priya Nair" },
   { id: "TE-006", name: "MTS & MTO", category: "Analytics", region: "EMIA", status: "Planned", priority: "Medium", owner: "Diego Fernández" },
+  // APAC seeded projects
+  { id: "TE-045", name: "APAC Digital Hub", category: "Digital Transformation", region: "APAC", status: "In Progress", priority: "High", owner: "Yuki Tanaka" },
+  { id: "TE-046", name: "APAC AI Forecast Engine", category: "AI", region: "APAC", status: "Discovery", priority: "Critical", owner: "Chen Wei" },
+  { id: "TE-047", name: "APAC Supply Automation", category: "Automation", region: "APAC", status: "Planned", priority: "Medium", owner: "Grace Lee" },
+  { id: "TE-048", name: "APAC Analytics Platform", category: "Analytics", region: "APAC", status: "In Progress", priority: "High", owner: "Rahul Mehta" },
+  { id: "TE-049", name: "APAC Customer Intelligence", category: "AI", region: "APAC", status: "Discovery", priority: "High", owner: "Priya Nair" },
+  { id: "TE-050", name: "APAC Procurement Bot", category: "Automation", region: "APAC", status: "Planned", priority: "Low", owner: "Amara Singh" },
+  { id: "TE-051", name: "APAC Compliance Monitor", category: "Analytics", region: "APAC", status: "Live", priority: "Critical", owner: "David Kim" },
+  { id: "TE-052", name: "APAC Logistics Optimizer", category: "Automation", region: "APAC", status: "In Progress", priority: "High", owner: "Marcus Chen" },
+  { id: "TE-053", name: "APAC Knowledge Graph", category: "AI", region: "APAC", status: "Discovery", priority: "Medium", owner: "Sofia Almeida" },
+  { id: "TE-054", name: "APAC ESG Dashboard", category: "Digital Transformation", region: "APAC", status: "Planned", priority: "Medium", owner: "Elena Rossi" },
 ]
 
 const NAME_POOL = [
@@ -85,14 +103,13 @@ function seeded(i: number) {
 
 function buildProject(i: number): Project {
   const named = NAMED[i]
-  const r = seeded(i + 1)
   const categories: Category[] = ["AI", "Automation", "Analytics", "Digital Transformation"]
-  const regions: Region[] = ["EMIA", "AMER", "GLOBAL"]
+  const regions: Region[] = ["EMIA", "AMER", "GLOBAL", "APAC"]
   const statuses: Status[] = ["Live", "In Progress", "Discovery", "Planned"]
   const priorities: Priority[] = ["Critical", "High", "Medium", "Low"]
 
   const category = named?.category ?? categories[Math.floor(seeded(i + 2) * 4)]
-  const region = named?.region ?? regions[Math.floor(seeded(i + 3) * 3)]
+  const region = named?.region ?? regions[Math.floor(seeded(i + 3) * 3)] // keep first 3 for non-named
   const status = named?.status ?? statuses[Math.floor(seeded(i + 4) * 4)]
   const priority = named?.priority ?? priorities[Math.floor(seeded(i + 5) * 4)]
   const owner = named?.owner ?? OWNERS[Math.floor(seeded(i + 6) * OWNERS.length)]
@@ -136,22 +153,22 @@ function buildProject(i: number): Project {
   }
 }
 
-export const PROJECTS: Project[] = Array.from({ length: 44 }, (_, i) => buildProject(i))
+export const PROJECTS: Project[] = Array.from({ length: 54 }, (_, i) => buildProject(i))
 
 export const CATEGORIES: Category[] = ["AI", "Automation", "Analytics", "Digital Transformation"]
-export const REGIONS: Region[] = ["EMIA", "AMER", "GLOBAL"]
+export const REGIONS: Region[] = ["EMIA", "AMER", "GLOBAL", "APAC"]
 export const STATUSES: Status[] = ["Live", "In Progress", "Discovery", "Planned"]
 export const PRIORITIES: Priority[] = ["Critical", "High", "Medium", "Low"]
 
 export const PORTFOLIO = {
-  activeProjects: 44,
+  activeProjects: 54,
   weeklyHoursSaved: 2960,
   fteSavings: 74,
   estimatedValue: 2_350_000,
   health: 94,
   growth: 18,
   valuePerYear: 2_300_000,
-  activePrograms: 44,
+  activePrograms: 54,
   upcomingMilestones: 12,
 }
 
